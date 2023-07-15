@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.service.product;
 
-import com.example.demo.controller.dto.Product.SearchProductDto;
 import com.example.demo.model.Product;
-import com.example.demo.service.argument.CreateProductArgument;
-import com.example.demo.service.argument.SearchProductArgument;
-import com.example.demo.service.argument.UpdateProductArgument;
+import com.example.demo.service.product.argument.CreateProductArgument;
+import com.example.demo.service.product.argument.SearchProductArgument;
+import com.example.demo.service.product.argument.UpdateProductArgument;
+import com.querydsl.core.types.Predicate;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,4 +18,8 @@ public interface ProductService {
     Product getExisting(UUID id);
 
     Product update(UUID id, UpdateProductArgument argument);
+
+    Predicate buildPredicate(SearchProductArgument argument);
+
+    void delete(UUID id);
 }

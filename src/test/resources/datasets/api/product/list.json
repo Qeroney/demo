@@ -1,0 +1,38 @@
+{
+  "product": [
+    {
+      "id": "b518fab0-302d-43de-b342-8026d9bce65a",
+      "title": "Картошечка",
+      "price": 234,
+      "category_id": "824c60d2-6c72-4822-9adf-a7e3b53938b8"
+    },
+    {
+      "id": "b518fab0-302d-43de-b342-8026d9bce65d",
+      "title": "Капуста",
+      "price": 54,
+      "category_id": "824c60d2-6c72-4822-9adf-a7e3b53938b8"
+    },
+    {
+      "id": "b518fab0-302d-43de-b342-8026d9bce65c",
+      "title": "Яблоко",
+      "price": 124,
+      "category_id": "9b8af09b-4dee-41a6-b608-819f4978958e"
+    },
+    {
+      "id": "b518fab0-302d-43de-b342-8026d9bce65b",
+      "title": "Клубника",
+      "price": 2344,
+      "category_id": "9b8af09b-4dee-41a6-b608-819f4978958e"
+    }
+  ],
+  "category": [
+    {
+      "id": "824c60d2-6c72-4822-9adf-a7e3b53938b8",
+      "title": "Овощи"
+    },
+    {
+      "id": "9b8af09b-4dee-41a6-b608-819f4978958e",
+      "title": "Фрукты"
+    }
+  ]
+}

@@ -1,13 +1,20 @@
-package com.example.demo.controller.Product;
+package com.example.demo.controller.product.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Builder
 public class UpdateProductDto {
 
     private String title;
 
     private Long price;
+
+    private UUID categoryId;
+
 }

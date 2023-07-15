@@ -1,12 +1,14 @@
-package com.example.demo.controller.Product;
+package com.example.demo.controller.product.dto;
 
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Builder
 public class CreateProductDto {
 

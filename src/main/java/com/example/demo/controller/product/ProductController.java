@@ -1,13 +1,15 @@
-package com.example.demo.controller;
+package com.example.demo.controller.product;
 
-import com.example.demo.action.CreateProductAction;
-import com.example.demo.controller.Product.UpdateProductDto;
-import com.example.demo.controller.Product.CreateProductDto;
-import com.example.demo.controller.Product.ProductDto;
-import com.example.demo.controller.Product.SearchProductDto;
+import com.example.demo.action.create.CreateProductAction;
+import com.example.demo.action.update.UpdateProductAction;
+import com.example.demo.action.update.UpdateProductActionArgument;
+import com.example.demo.controller.product.dto.CreateProductDto;
+import com.example.demo.controller.product.dto.ProductDto;
+import com.example.demo.controller.product.dto.SearchProductDto;
+import com.example.demo.controller.product.dto.UpdateProductDto;
 import com.example.demo.model.Product;
-import com.example.demo.service.Product.ProductService;
-import com.example.demo.service.argument.Search.SearchProductArgument;
+import com.example.demo.service.product.ProductService;
+import com.example.demo.service.product.argument.SearchProductArgument;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.example.demo.mapper.ProductMapper.PRODUCT_MAPPER;
+import static com.example.demo.controller.product.mapper.ProductMapper.PRODUCT_MAPPER;
 
 @RestController
 @RequestMapping("product")
@@ -26,14 +28,17 @@ public class ProductController {
 
     private final CreateProductAction createProductAction;
 
+    private final UpdateProductAction updateProductAction;
+
     @GetMapping("list")
     public List<ProductDto> list(SearchProductDto dto) {
-        SearchProductArgument argument = PRODUCT_MAPPER.toSearchProductArgument(dto);
+        SearchProductArgument argument = PRODUCT_MAPPER.toSearchArgument(dto);
 
         return productService.list(argument)
                 .stream()
                 .map(PRODUCT_MAPPER::toDto)
                 .collect(Collectors.toList());
+
     }
 
     @PostMapping("create")
@@ -45,8 +50,13 @@ public class ProductController {
 
     @PutMapping("update/{id}")
     public ProductDto update(@PathVariable UUID id, @RequestBody UpdateProductDto dto) {
-        Product product = productService.update(id,PRODUCT_MAPPER.toUpdateProductArgument(dto));
-
+        UpdateProductActionArgument argument = PRODUCT_MAPPER.toUpdateActionArgument(dto);
+        Product product = updateProductAction.execute(id, argument);
         return PRODUCT_MAPPER.toDto(product);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable UUID id) {
+        productService.delete(id);
     }
 }
