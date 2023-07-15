@@ -1,4 +1,4 @@
-package com.example.demo.service.argument;
+package com.example.demo.service.argument.Product;
 
 import com.example.demo.model.Category;
 import lombok.Builder;

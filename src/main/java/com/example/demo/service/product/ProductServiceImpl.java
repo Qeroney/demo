@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.controller.dto.Product.SearchProductDto;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.argument.CreateProductArgument;
+import com.example.demo.service.argument.SearchProductArgument;
 import com.example.demo.service.argument.UpdateProductArgument;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
     @Override
-    public List<Product> list() {
+    public List<Product> list(SearchProductArgument argument) {
         return repository.findAll();
     }
 
