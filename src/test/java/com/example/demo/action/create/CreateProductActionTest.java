@@ -56,10 +56,10 @@ public class CreateProductActionTest {
         // Assert
 
         ArgumentCaptor<UUID> categoryIdCaptor = ArgumentCaptor.forClass(UUID.class);
-        ArgumentCaptor<CreateProductArgument> productCaptor = ArgumentCaptor.forClass(CreateProductArgument.class);
+        ArgumentCaptor<CreateProductArgument> createProductArgumentCaptor = ArgumentCaptor.forClass(CreateProductArgument.class);
 
         Mockito.verify(categoryService,Mockito.only()).getExisting(categoryIdCaptor.capture());
-        Mockito.verify(productService,Mockito.only()).create(productCaptor.capture());
+        Mockito.verify(productService,Mockito.only()).create(createProductArgumentCaptor.capture());
 
         CreateProductArgument expectedArgument = CreateProductArgument.builder()
                 .title("test")
@@ -77,7 +77,7 @@ public class CreateProductActionTest {
                 .usingRecursiveComparison()
                 .isEqualTo(categoryId);
 
-        assertThat(productCaptor.getValue())
+        assertThat(createProductArgumentCaptor.getValue())
                 .usingRecursiveComparison()
                 .isEqualTo(expectedArgument);
 

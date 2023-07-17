@@ -64,6 +64,9 @@ class ProductControllerIT {
 
         // Arrange
 
+        UUID categoryId = UUID.fromString("824c60d2-6c72-4822-9adf-a7e3b53938b8");
+        UUID productId = UUID.fromString("b518fab0-302d-43de-b342-8026d9bce65a");
+
         SearchProductDto dto = SearchProductDto.builder()
                 .productTitle("Картошечка")
                 .categoryTitle("Овощи")
@@ -86,11 +89,11 @@ class ProductControllerIT {
         // Assert
 
         List<ProductDto> expectedBody = Lists.newArrayList(ProductDto.builder()
-                .id(UUID.fromString("b518fab0-302d-43de-b342-8026d9bce65a"))
+                .id(productId)
                 .title("Картошечка")
                 .price(234L)
                 .category(CategoryDto.builder()
-                        .id(UUID.fromString("824c60d2-6c72-4822-9adf-a7e3b53938b8"))
+                        .id(categoryId)
                         .title("Овощи")
                         .build())
                 .build());
@@ -109,10 +112,12 @@ class ProductControllerIT {
 
         // Arrange
 
+        UUID categoryId = UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e");
+
         CreateProductDto dto = CreateProductDto.builder()
                 .title("Клубника")
                 .price(55L)
-                .categoryId(UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e"))
+                .categoryId(categoryId)
                 .build();
 
         // Act
@@ -135,7 +140,7 @@ class ProductControllerIT {
                 .title("Клубника")
                 .price(55L)
                 .category(CategoryDto.builder()
-                        .id(UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e"))
+                        .id(categoryId)
                         .title("Фрукты")
                         .build())
                 .build();
@@ -154,16 +159,19 @@ class ProductControllerIT {
 
         // Arrange
 
+        UUID productId = UUID.fromString("a8c707fa-8a83-4ed0-bebf-1c407d68895f");
+        UUID categoryId = UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e");
+
         UpdateProductDto dto = UpdateProductDto.builder()
                 .title("Клубника")
                 .price(50l)
-                .categoryId(UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e"))
+                .categoryId(categoryId)
                 .build();
 
         // Act
 
         ProductDto response = webTestClient.put()
-                .uri(uriBuilder -> uriBuilder.path("/product/update/a8c707fa-8a83-4ed0-bebf-1c407d68895f")
+                .uri(uriBuilder -> uriBuilder.path("/product/update/" + productId)
                         .build())
                 .header("Authorization", "Bearer token")
                 .bodyValue(dto)
@@ -177,11 +185,11 @@ class ProductControllerIT {
         // Assert
 
         ProductDto expected = ProductDto.builder()
-                .id(UUID.fromString("a8c707fa-8a83-4ed0-bebf-1c407d68895f"))
+                .id(productId)
                 .title("Клубника")
                 .price(50l)
                 .category(CategoryDto.builder()
-                        .id(UUID.fromString("9b8af09b-4dee-41a6-b608-819f4978958e"))
+                        .id(categoryId)
                         .title("Фрукты")
                         .build())
                 .build();
@@ -200,12 +208,12 @@ class ProductControllerIT {
 
         // Arrange
 
-       UUID id = UUID.fromString("53291b58-cc67-4697-b69e-5a824bac36e4");
+       UUID productId = UUID.fromString("53291b58-cc67-4697-b69e-5a824bac36e4");
 
         // Act
 
         webTestClient.delete()
-                .uri(uriBuilder -> uriBuilder.path("/product/delete/"+ id)
+                .uri(uriBuilder -> uriBuilder.path("/product/delete/" + productId)
                         .build())
                 .header("Authorization", "Bearer token")
                 .exchange()
