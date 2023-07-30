@@ -1,10 +1,10 @@
 package com.example.demo.controller.cart;
 
-import com.example.demo.action.addToCart.AddProductAction;
+import com.example.demo.action.addToCart.AddProductToCartAction;
 import com.example.demo.controller.cart.dto.CartDto;
 import com.example.demo.model.Cart;
 import com.example.demo.service.cart.CartService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +15,16 @@ import static com.example.demo.controller.cart.mapper.CartMapper.CART_MAPPER;
 
 @RestController
 @RequestMapping("cart")
-@RequiredArgsConstructor
 public class CartController {
+    @Autowired
+    public CartController(CartService cartService, AddProductToCartAction addProduct) {
+        this.cartService = cartService;
+        AddProduct = addProduct;
+    }
 
     private final CartService cartService;
 
-    private final AddProductAction AddProduct;
+    private final AddProductToCartAction AddProduct;
 
     @GetMapping("list")
     public List<CartDto> list(){

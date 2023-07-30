@@ -3,6 +3,7 @@ package com.example.demo.controller.product;
 import com.example.demo.action.create.CreateProductAction;
 import com.example.demo.action.update.UpdateProductAction;
 import com.example.demo.action.update.UpdateProductActionArgument;
+import com.example.demo.aspect.annotation.LogProductCreation;
 import com.example.demo.controller.product.dto.CreateProductDto;
 import com.example.demo.controller.product.dto.ProductDto;
 import com.example.demo.controller.product.dto.SearchProductDto;
@@ -10,7 +11,7 @@ import com.example.demo.controller.product.dto.UpdateProductDto;
 import com.example.demo.model.Product;
 import com.example.demo.service.product.ProductService;
 import com.example.demo.service.product.argument.SearchProductArgument;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,13 @@ import static com.example.demo.controller.product.mapper.ProductMapper.PRODUCT_M
 
 @RestController
 @RequestMapping("product")
-@RequiredArgsConstructor
 public class ProductController {
+    @Autowired
+    public ProductController(ProductService productService, CreateProductAction createProductAction, UpdateProductAction updateProductAction) {
+        this.productService = productService;
+        this.createProductAction = createProductAction;
+        this.updateProductAction = updateProductAction;
+    }
 
     private final ProductService productService;
 
@@ -42,6 +48,7 @@ public class ProductController {
     }
 
     @PostMapping("create")
+    @LogProductCreation
     public ProductDto create(@RequestBody CreateProductDto dto) {
         Product product = createProductAction.execute(PRODUCT_MAPPER.toCreateActionArgument(dto));
 

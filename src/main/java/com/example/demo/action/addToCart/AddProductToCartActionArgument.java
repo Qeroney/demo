@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Value
 @Builder
-public class AddProductActionArgument {
+public class AddProductToCartActionArgument {
 
     UUID productId;
 }

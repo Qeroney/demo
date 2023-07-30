@@ -19,9 +19,9 @@ public class Category {
 
     @Id
     @GeneratedValue
-    UUID id;
+    private UUID id;
 
-    String title;
+    private String title;
 
     @OneToMany(mappedBy = "category")
     List<Product> products;

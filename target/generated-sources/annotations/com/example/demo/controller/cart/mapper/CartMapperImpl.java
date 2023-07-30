@@ -1,6 +1,6 @@
 package com.example.demo.controller.cart.mapper;
 
-import com.example.demo.action.addToCart.AddProductActionArgument;
+import com.example.demo.action.addToCart.AddProductToCartActionArgument;
 import com.example.demo.controller.cart.dto.CartDto;
 import com.example.demo.controller.category.dto.CategoryDto;
 import com.example.demo.controller.product.dto.ProductDto;
@@ -14,22 +14,22 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-15T16:49:49+1000",
+    date = "2023-07-30T00:49:07+1000",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 public class CartMapperImpl implements CartMapper {
 
     @Override
-    public AddProductActionArgument toAddProductToCart(UUID productId) {
+    public AddProductToCartActionArgument toAddProductToCart(UUID productId) {
         if ( productId == null ) {
             return null;
         }
 
-        AddProductActionArgument.AddProductActionArgumentBuilder addProductActionArgument = AddProductActionArgument.builder();
+        AddProductToCartActionArgument.AddProductToCartActionArgumentBuilder addProductToCartActionArgument = AddProductToCartActionArgument.builder();
 
-        addProductActionArgument.productId( productId );
+        addProductToCartActionArgument.productId( productId );
 
-        return addProductActionArgument.build();
+        return addProductToCartActionArgument.build();
     }
 
     @Override

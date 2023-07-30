@@ -1,7 +1,7 @@
 package com.example.demo.action.addProductToCart;
 
-import com.example.demo.action.addToCart.AddProductAction;
-import com.example.demo.action.addToCart.AddProductActionArgument;
+import com.example.demo.action.addToCart.AddProductToCartAction;
+import com.example.demo.action.addToCart.AddProductToCartActionArgument;
 import com.example.demo.model.Cart;
 import com.example.demo.model.CustomUser;
 import com.example.demo.model.Product;
@@ -31,10 +31,10 @@ public class AddProductActionTest {
 
     private final CustomUserService customUserService = Mockito.mock(CustomUserService.class);
 
-    private final AddProductAction action = new AddProductAction(cartService,
-            productService,
-            authService,
-            customUserService);
+    private final AddProductToCartAction action = new AddProductToCartAction(cartService,
+                                                                             productService,
+                                                                             authService,
+                                                                             customUserService);
 
     @Test
     public void execute() {
@@ -49,9 +49,9 @@ public class AddProductActionTest {
         Product product = Mockito.mock(Product.class);
         Cart returnedCart = Mockito.mock(Cart.class);
 
-        AddProductActionArgument argument = AddProductActionArgument.builder()
-                .productId(productId)
-                .build();
+        AddProductToCartActionArgument argument = AddProductToCartActionArgument.builder()
+                                                                                .productId(productId)
+                                                                                .build();
 
         Cart cart = Cart.builder()
                 .id(cartId)

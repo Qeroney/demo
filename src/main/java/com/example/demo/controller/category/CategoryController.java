@@ -1,5 +1,6 @@
 package com.example.demo.controller.category;
 
+import com.example.demo.aspect.annotation.LogProductCreation;
 import com.example.demo.controller.category.dto.CreateCategoryDto;
 import com.example.demo.controller.category.dto.SearchCategoryDto;
 import com.example.demo.controller.category.dto.UpdateCategoryDto;
@@ -8,6 +9,8 @@ import com.example.demo.model.Category;
 import com.example.demo.service.category.CategoryService;
 import com.example.demo.service.category.argument.SearchCategoryArgument;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,22 +21,24 @@ import static com.example.demo.controller.category.mapper.CategoryMapper.CATEGOR
 
 @RestController
 @RequestMapping("category")
-@RequiredArgsConstructor
 public class CategoryController {
-    CategoryService categoryService;
+    @Autowired
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    private final CategoryService categoryService;
+
 
     @GetMapping("list")
-        public List<CategoryDto> list(SearchCategoryDto dto){
+    public List<CategoryDto> list(SearchCategoryDto dto) {
         SearchCategoryArgument argument = CATEGORY_MAPPER.toSearchCategory(dto);
 
-       return categoryService.list(argument)
-               .stream()
-               .map(CATEGORY_MAPPER::toDto)
-               .collect(Collectors.toList());
+        return categoryService.list(argument).stream().map(CATEGORY_MAPPER::toDto).collect(Collectors.toList());
     }
 
     @PostMapping("create")
-    public CategoryDto create(@RequestBody CreateCategoryDto dto){
+    public CategoryDto create(@RequestBody CreateCategoryDto dto) {
 
         Category category = categoryService.create(CATEGORY_MAPPER.toCreateCategory(dto));
 
@@ -41,15 +46,16 @@ public class CategoryController {
     }
 
     @PutMapping("update/{id}")
-    public CategoryDto update(@PathVariable UUID id, @RequestBody UpdateCategoryDto dto){
+    public CategoryDto update(@PathVariable UUID id, @RequestBody UpdateCategoryDto dto) {
 
         Category category = categoryService.update(id, CATEGORY_MAPPER.toUpdateCategoryArgument(dto));
 
         return CATEGORY_MAPPER.toDto(category);
 
     }
+
     @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable UUID id){
-       categoryService.delete(id);
+    public void delete(@PathVariable UUID id) {
+        categoryService.delete(id);
     }
 }

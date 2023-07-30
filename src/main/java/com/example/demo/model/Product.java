@@ -14,11 +14,11 @@ public class Product {
 
     @Id
     @GeneratedValue
-     UUID id;
+     private UUID id;
 
-     String title;
+     private String title;
 
-     Long price;
+     private Long price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

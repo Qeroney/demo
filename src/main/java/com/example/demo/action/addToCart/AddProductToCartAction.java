@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class AddProductAction {
+public class AddProductToCartAction {
     private final CartService cartService;
 
     private final ProductService productService;
@@ -28,7 +28,7 @@ public class AddProductAction {
     private final CustomUserService customUserService;
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Cart execute(AddProductActionArgument argument) {
+    public Cart execute(AddProductToCartActionArgument argument) {
 
         UUID authorizedUserId = authService.getAuthorizedUserId();
 

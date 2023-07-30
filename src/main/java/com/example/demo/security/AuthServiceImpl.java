@@ -42,21 +42,22 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(@NonNull RegisterRequest request) {
-        CustomUser user = createCustomUserAction.execute(CreateCustomUserActionArgument.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build());
+        CustomUser user = createCustomUserAction.execute(
+                CreateCustomUserActionArgument.builder()
+                                              .email(request.getEmail())
+                                              .password(passwordEncoder.encode(request.getPassword()))
+                                              .build());
     }
 
     @Override
     public AuthResponse authenticate(@NonNull AuthRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = service.findByEmail(request.getEmail());
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        CustomUser user = (CustomUser) authentication.getPrincipal();
 
 
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
+                           .token(jwtToken)
+                           .build();
     }
 }

@@ -52,4 +52,12 @@ public class CustomUserServiceImpl implements CustomUserService {
     public CustomUser findByEmail(String email) {
         return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found", null));
     }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public CustomUser changeBalance(UUID id, Long balance) {
+        CustomUser customUser = getExisting(id);
+        customUser.setBalance(balance);
+        return repository.save(customUser);
+    }
 }
