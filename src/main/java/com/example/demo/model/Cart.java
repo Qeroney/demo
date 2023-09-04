@@ -16,7 +16,7 @@ public class Cart {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    UUID id;
 
     @OneToMany
     List<Product> products;

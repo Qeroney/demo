@@ -18,12 +18,12 @@ import java.util.UUID;
 public class Order {
     @Id
     @GeneratedValue
-    private UUID id;
+    UUID id;
 
-    private Long finalPrice;
+    Long finalPrice;
 
-    private String deliveryName;
-    private String deliveryPlace;
+    String deliveryName;
+    String deliveryPlace;
 
     @CreationTimestamp
     LocalDateTime orderTime;
