@@ -6,6 +6,7 @@ import com.example.demo.model.Role;
 import com.example.demo.repository.CustomUserRepository;
 import com.example.demo.service.user.argument.CreateCustomUserArgument;
 import com.example.demo.service.user.argument.UpdateCustomUserArgument;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,7 +22,7 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public CustomUser create(CreateCustomUserArgument argument) {
+    public CustomUser create(@NonNull CreateCustomUserArgument argument) {
         return repository.save(CustomUser.builder()
                                          .email(argument.getEmail())
                                          .password(argument.getPassword())
@@ -33,7 +34,7 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public CustomUser update(UpdateCustomUserArgument argument) {
+    public CustomUser update(@NonNull UpdateCustomUserArgument argument) {
         return repository.save(CustomUser.builder()
                                          .email(argument.getEmail())
                                          .password(argument.getPassword())
@@ -43,19 +44,19 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public CustomUser getExisting(UUID id) {
+    public CustomUser getExisting(@NonNull UUID id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found: ", id));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CustomUser findByEmail(String email) {
+    public CustomUser findByEmail(@NonNull String email) {
         return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found", null));
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public CustomUser changeBalance(UUID id, Long balance) {
+    public CustomUser changeBalance(@NonNull UUID id, @NonNull Long balance) {
         CustomUser customUser = getExisting(id);
         customUser.setBalance(balance);
         return repository.save(customUser);

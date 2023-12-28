@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Product create(CreateProductArgument argument) {
+    public Product create(@NonNull CreateProductArgument argument) {
         return repository.save(Product.builder()
                                       .title(argument.getTitle())
                                       .price(argument.getPrice())
@@ -54,13 +54,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Product getExisting(UUID id) {
+    public Product getExisting(@NonNull UUID id) {
         return repository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Product update(UUID id, UpdateProductArgument argument) {
+    public Product update(@NonNull UUID id, @NonNull UpdateProductArgument argument) {
         Product product = getExisting(id);
 
         product.setTitle(argument.getTitle());
@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void delete(UUID id) {
+    public void delete(@NonNull UUID id) {
         repository.deleteById(id);
     }
 }
