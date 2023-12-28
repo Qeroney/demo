@@ -11,67 +11,62 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 
 
-public class CreateProductActionTest {
+class CreateProductActionTest {
 
-     private final ProductService productService = Mockito.mock(ProductService.class);
+    private final ProductService productService = Mockito.mock(ProductService.class);
 
-     private final CategoryService categoryService = Mockito.mock(CategoryService.class);
+    private final CategoryService categoryService = Mockito.mock(CategoryService.class);
 
-     private final CreateProductAction action = new CreateProductAction(productService,categoryService);
+    private final CreateProductAction action = new CreateProductAction(productService, categoryService);
 
     @Test
-    public void execute() {
-
+    void execute() {
         // Arrange
-
         Product expectedProduct = Mockito.mock(Product.class);
         UUID categoryId = UUID.randomUUID();
 
         CreateProductActionArgument argument = CreateProductActionArgument.builder()
-                .title("test")
-                .categoryId(categoryId)
-                .price(0l)
-                .build();
+                                                                          .title("test")
+                                                                          .categoryId(categoryId)
+                                                                          .price(0l)
+                                                                          .build();
 
         Category category = Category.builder()
-                .id(categoryId)
-                .title("test")
-                .products(new ArrayList<>())
-                .build();
+                                    .id(categoryId)
+                                    .title("test")
+                                    .products(new ArrayList<>())
+                                    .build();
 
         Mockito.when(categoryService.getExisting(categoryId)).thenReturn(category);
         Mockito.when(productService.create(any())).thenReturn(expectedProduct);
 
         // Act
-
         Product execute = action.execute(argument);
 
         // Assert
-
         ArgumentCaptor<UUID> categoryIdCaptor = ArgumentCaptor.forClass(UUID.class);
         ArgumentCaptor<CreateProductArgument> createProductArgumentCaptor = ArgumentCaptor.forClass(CreateProductArgument.class);
 
-        Mockito.verify(categoryService,Mockito.only()).getExisting(categoryIdCaptor.capture());
-        Mockito.verify(productService,Mockito.only()).create(createProductArgumentCaptor.capture());
+        Mockito.verify(categoryService, Mockito.only()).getExisting(categoryIdCaptor.capture());
+        Mockito.verify(productService, Mockito.only()).create(createProductArgumentCaptor.capture());
 
         CreateProductArgument expectedArgument = CreateProductArgument.builder()
-                .title("test")
-                .price(0l)
-                .category(Category.builder()
-                        .id(categoryId)
-                        .title("test")
-                        .products(new ArrayList<>())
-                        .build())
-                .build();
+                                                                      .title("test")
+                                                                      .price(0l)
+                                                                      .category(Category.builder()
+                                                                                        .id(categoryId)
+                                                                                        .title("test")
+                                                                                        .products(new ArrayList<>())
+                                                                                        .build())
+                                                                      .build();
 
-        Assertions.assertEquals(execute,expectedProduct);
+        Assertions.assertEquals(execute, expectedProduct);
 
         assertThat(categoryIdCaptor.getValue())
                 .usingRecursiveComparison()
@@ -80,7 +75,5 @@ public class CreateProductActionTest {
         assertThat(createProductArgumentCaptor.getValue())
                 .usingRecursiveComparison()
                 .isEqualTo(expectedArgument);
-
-
     }
 }

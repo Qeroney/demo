@@ -40,6 +40,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order getExisting(UUID id) {
         return repository.findById(id).orElseThrow(RuntimeException::new);
     }

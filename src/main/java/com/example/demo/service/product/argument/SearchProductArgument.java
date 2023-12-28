@@ -7,7 +7,7 @@ import lombok.Value;
 @Builder
 public class SearchProductArgument {
 
-    private String productTitle;
+    String productTitle;
 
-    private String categoryTitle;
+    String categoryTitle;
 }

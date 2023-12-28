@@ -1,6 +1,6 @@
 package com.example.demo.aspect;
 
-import com.example.demo.controller.product.dto.ProductDto;
+import com.example.demo.api.product.dto.ProductDto;
 import com.example.demo.feign.LoggingServiceFeign;
 import com.example.demo.feign.dto.CreateProductHistoryDto;
 import com.example.demo.security.AuthService;

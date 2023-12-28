@@ -5,8 +5,11 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.category.argument.CreateCategoryArgument;
 import com.example.demo.service.category.argument.SearchCategoryArgument;
 import com.example.demo.service.category.argument.UpdateCategoryArgument;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,25 +21,29 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
 
     @Override
-    public List<Category> list(SearchCategoryArgument argument) {
+    @Transactional(readOnly = true)
+    public List<Category> list(@NonNull SearchCategoryArgument argument) {
         return repository.findAll();
     }
 
     @Override
-    public Category create(CreateCategoryArgument categoryArgument) {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Category create(@NonNull CreateCategoryArgument categoryArgument) {
         return repository.save(Category.builder()
-                .title(categoryArgument.getTitle())
-                .build());
+                                       .title(categoryArgument.getTitle())
+                                       .build());
     }
 
     @Override
-    public Category getExisting(UUID id) {
+    @Transactional(readOnly = true)
+    public Category getExisting(@NonNull UUID id) {
         return repository.findById(id)
-                .orElseThrow(()->new RuntimeException("категория не найдена"));
+                         .orElseThrow(() -> new RuntimeException("категория не найдена"));
     }
 
     @Override
-    public Category update(UUID id, UpdateCategoryArgument categoryArgument) {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Category update(@NonNull UUID id, @NonNull UpdateCategoryArgument categoryArgument) {
         Category category = getExisting(id);
 
         category.setTitle(categoryArgument.getTitle());
@@ -45,7 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(UUID id) {
-     repository.deleteById(id);
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void delete(@NonNull UUID id) {
+        repository.deleteById(id);
     }
 }

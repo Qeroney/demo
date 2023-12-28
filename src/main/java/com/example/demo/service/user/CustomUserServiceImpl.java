@@ -23,22 +23,22 @@ public class CustomUserServiceImpl implements CustomUserService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public CustomUser create(CreateCustomUserArgument argument) {
         return repository.save(CustomUser.builder()
-                .email(argument.getEmail())
-                .password(argument.getPassword())
-                .cart(argument.getCart())
-                .balance(0L)
-                .role(Role.USER)
-                .build());
+                                         .email(argument.getEmail())
+                                         .password(argument.getPassword())
+                                         .cart(argument.getCart())
+                                         .balance(0L)
+                                         .role(Role.USER)
+                                         .build());
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public CustomUser update(UpdateCustomUserArgument argument) {
         return repository.save(CustomUser.builder()
-                .email(argument.getEmail())
-                .password(argument.getPassword())
-                .balance(argument.getBalance())
-                .build());
+                                         .email(argument.getEmail())
+                                         .password(argument.getPassword())
+                                         .balance(argument.getBalance())
+                                         .build());
     }
 
     @Override

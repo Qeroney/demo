@@ -11,7 +11,7 @@ public interface CartService {
 
     Cart create(CreateCartArgument argument);
 
-    Cart update(UUID id,UpdateCartArgument argument);
+    Cart update(UUID id, UpdateCartArgument argument);
 
     Cart getExisting(UUID uuid);
 

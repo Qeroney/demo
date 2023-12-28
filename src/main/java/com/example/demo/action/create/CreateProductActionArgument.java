@@ -1,6 +1,5 @@
 package com.example.demo.action.create;
 
-import com.example.demo.model.Category;
 import lombok.Builder;
 import lombok.Value;
 

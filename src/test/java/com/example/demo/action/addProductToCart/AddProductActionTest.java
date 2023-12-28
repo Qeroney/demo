@@ -21,7 +21,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
-public class AddProductActionTest {
+class AddProductActionTest {
 
     private final CartService cartService = Mockito.mock(CartService.class);
 
@@ -37,10 +37,8 @@ public class AddProductActionTest {
                                                                              customUserService);
 
     @Test
-    public void execute() {
-
+    void execute() {
         // Arrange
-
         UUID productId = UUID.randomUUID();
         UUID userId = UUID.randomUUID();
         UUID cartId = UUID.randomUUID();
@@ -54,9 +52,9 @@ public class AddProductActionTest {
                                                                                 .build();
 
         Cart cart = Cart.builder()
-                .id(cartId)
-                .products(new ArrayList<>())
-                .build();
+                        .id(cartId)
+                        .products(new ArrayList<>())
+                        .build();
 
         Mockito.when(authService.getAuthorizedUserId()).thenReturn(userId);
 
@@ -67,41 +65,36 @@ public class AddProductActionTest {
         Mockito.when(user.getCart()).thenReturn(cart);
 
         Mockito.when(cartService.update(any(UUID.class), any(UpdateCartArgument.class)))
-                .thenReturn(returnedCart);
+               .thenReturn(returnedCart);
 
         // Act
-
         Cart execute = action.execute(argument);
 
         // Assert
-
         ArgumentCaptor<UUID> userIdCaptor = ArgumentCaptor.forClass(UUID.class);
-
         ArgumentCaptor<UUID> productIdCaptor = ArgumentCaptor.forClass(UUID.class);
-
         ArgumentCaptor<UUID> cartIdCaptor = ArgumentCaptor.forClass(UUID.class);
-
         ArgumentCaptor<UpdateCartArgument> updateCartArgumentArgumentCaptor = ArgumentCaptor.forClass(UpdateCartArgument.class);
 
         Mockito.verify(customUserService, Mockito.only()).getExisting(userIdCaptor.capture());
         Mockito.verify(productService, Mockito.only()).getExisting(productIdCaptor.capture());
         Mockito.verify(cartService, Mockito.only())
-                .update(cartIdCaptor.capture(),updateCartArgumentArgumentCaptor.capture());
+               .update(cartIdCaptor.capture(), updateCartArgumentArgumentCaptor.capture());
 
         UpdateCartArgument expectedUpdateArgument = UpdateCartArgument.builder()
-                .products(Lists.newArrayList(product))
-                .build();
+                                                                      .products(Lists.newArrayList(product))
+                                                                      .build();
 
         Assertions.assertThat(userIdCaptor.getValue())
-                .isEqualTo(userId);
+                  .isEqualTo(userId);
         Assertions.assertThat(productIdCaptor.getValue())
-                .isEqualTo(productId);
+                  .isEqualTo(productId);
         Assertions.assertThat(cartIdCaptor.getValue())
-                .isEqualTo(cartId);
+                  .isEqualTo(cartId);
         Assertions.assertThat(updateCartArgumentArgumentCaptor.getValue())
-                .usingRecursiveComparison()
-                .withStrictTypeChecking()
-                .isEqualTo(expectedUpdateArgument);
+                  .usingRecursiveComparison()
+                  .withStrictTypeChecking()
+                  .isEqualTo(expectedUpdateArgument);
 
         Assertions.assertThat(execute).isEqualTo(returnedCart);
     }

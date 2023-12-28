@@ -4,6 +4,7 @@ import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.service.cart.argument.CreateCartArgument;
 import com.example.demo.service.cart.argument.UpdateCartArgument;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -20,15 +21,15 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Cart create(CreateCartArgument argument) {
+    public Cart create(@NonNull CreateCartArgument argument) {
         return repository.save(Cart.builder()
-                .products(argument.getProducts())
-                .build());
+                                   .products(argument.getProducts())
+                                   .build());
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Cart update(UUID id, UpdateCartArgument argument) {
+    public Cart update(@NonNull UUID id, @NonNull UpdateCartArgument argument) {
         Cart cart = getExisting(id);
         cart.setProducts(argument.getProducts());
         return repository.save(cart);
@@ -36,7 +37,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional(readOnly = true)
-    public Cart getExisting(UUID uuid) {
+    public Cart getExisting(@NonNull UUID uuid) {
         return repository.findById(uuid).orElseThrow(RuntimeException::new);
     }
 
@@ -45,5 +46,4 @@ public class CartServiceImpl implements CartService {
     public List<Cart> list() {
         return repository.findAll();
     }
-
 }

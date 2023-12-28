@@ -9,6 +9,7 @@ import com.example.demo.service.product.argument.SearchProductArgument;
 import com.example.demo.service.product.argument.UpdateProductArgument;
 import com.google.common.collect.Lists;
 import com.querydsl.core.types.Predicate;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Product> list(SearchProductArgument argument) {
+    public List<Product> list(@NonNull SearchProductArgument argument) {
 
         Predicate predicate = buildPredicate(argument);
 
@@ -36,19 +37,19 @@ public class ProductServiceImpl implements ProductService {
 
     public Predicate buildPredicate(SearchProductArgument argument) {
         return QPredicates.builder()
-                .add(argument.getProductTitle(), qProduct.title::containsIgnoreCase)
-                .add(argument.getCategoryTitle(),qProduct.category.title::containsIgnoreCase)
-                .buildAnd();
+                          .add(argument.getProductTitle(), qProduct.title::containsIgnoreCase)
+                          .add(argument.getCategoryTitle(), qProduct.category.title::containsIgnoreCase)
+                          .buildAnd();
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Product create(CreateProductArgument argument) {
         return repository.save(Product.builder()
-                .title(argument.getTitle())
-                .price(argument.getPrice())
-                .category(argument.getCategory())
-                .build());
+                                      .title(argument.getTitle())
+                                      .price(argument.getPrice())
+                                      .category(argument.getCategory())
+                                      .build());
     }
 
     @Override

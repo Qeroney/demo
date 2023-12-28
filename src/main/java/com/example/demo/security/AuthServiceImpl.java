@@ -3,9 +3,9 @@ package com.example.demo.security;
 
 import com.example.demo.action.user.CreateCustomUserAction;
 import com.example.demo.action.user.CreateCustomUserActionArgument;
-import com.example.demo.controller.auth.dto.AuthRequest;
-import com.example.demo.controller.auth.dto.AuthResponse;
-import com.example.demo.controller.auth.dto.RegisterRequest;
+import com.example.demo.api.auth.dto.AuthRequest;
+import com.example.demo.api.auth.dto.AuthResponse;
+import com.example.demo.api.auth.dto.RegisterRequest;
 import com.example.demo.model.CustomUser;
 import com.example.demo.service.user.CustomUserService;
 import lombok.NonNull;
